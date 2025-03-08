@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlanGen: Towards Unified Layout Planning and Image Generation in Auto-Regressive Vision Language Models</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<style>
+  .section.hero {
+    margin-bottom: 0px; /* 移除或减小底部外边距 */
+  }
+
+  .hero {
+    margin-bottom: -80px; /* 移除或减小底部外边距 */
+  }
+
+  .hero2 {
+    margin-bottom: -200px; /* 移除或减小底部外边距 */
+    margin-top: 100px; /* 移除或减小底部外边距 */
+  }
+  
+  .content1 {
+      text-align: left;
+      margin-bottom: 80px; /* 移除或减小底部外边距 */
+  }
+
+  .image {
+    max-width: 450px; /* Set the maximum width */
+    max-height: 450px; /* Set the maximum height */
+  }
+
+  .marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-block {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.marquee-inner {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 60s linear infinite; /* 调整时间以匹配内容长度 */
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); } /* 这里的百分比应该根据内容宽度调整 */
+}
+
+.marquee-item {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10px; /* 根据需要调整间距 */
+  padding: 0; /* 确保没有内边距 */
+}
+
+/* 移除两个 span 之间的间隔 */
+.marquee-inner > span {
+  margin: 0;
+  padding: 0;
+}
+</style>
+
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+      </div>
+      <div class="container has-text-centered">
+        <h1 class="title is-1 publication-title">
+          PlanGen: 
+        </h1>
+        <h3 class="title is-3 publication-title">
+          Towards Unified Layout Planning and Image Generation
+        </h3>
+        <h3 class="title is-3 publication-title">
+          in Auto-Regressive Vision Language Models
+        </h3>
+        <div class="is-size-5 publication-authors">
+          360 AI Research
+          <!-- <div class="author-block"><a href="https://scholar.google.cz/citations?user=xFkLeUAAAAAJ&hl=zh-CN&oi=ao">Runze He</a><sup>1</sup>, </div>
+          <div class="author-block"><a href="">Kai Ma</a><sup>2</sup>, </div>
+          <div class="author-block"><a href="https://scholar.google.cz/citations?user=j5rBSw0AAAAJ&hl=zh-CN&oi=ao">Linjiang Huang</a><sup>3</sup>, </div>
+          <div class="author-block"><a href="https://scholar.google.cz/citations?user=hVbSuo0AAAAJ&hl=zh-CN&oi=ao">Shaofei Huang</a><sup>1</sup>, </div>
+          <div class="author-block"><a href="https://scholar.google.cz/citations?hl=zh-CN&user=sj4FqEgAAAAJ">Jialin Gao</a><sup>2</sup>, </div>
+          <div class="author-block"><a href="https://scholar.google.cz/citations?hl=zh-CN&user=JXV5yrZxj5MC">Xiaoming Wei</a><sup>2</sup>, </div>
+          <div class="author-block"><a href="">Jiao Dai</a><sup>1</sup>, </div><br>
+          <div class="author-block"><a href="https://scholar.google.cz/citations?user=0b_BPiMAAAAJ&hl=zh-CN&oi=ao">Jizhong Han</a><sup>1</sup>, </div>
+          <div class="author-block"><a href="https://scholar.google.cz/citations?user=-QtVtNEAAAAJ&hl=zh-CN&oi=ao">Si Liu</a><sup>3</sup> </div> -->
+        </div>
+
+        <!-- <div class="is-size-5 publication-authors">
+          <span class="author-block"><sup>1</sup>Institute of Information Engineering, Chinese Academy of Sciences,</span><br>
+          <span class="author-block"><sup>2</sup>Meituan, <sup>3</sup>Beihang University</span><br>
+        </div> -->
+
+        <div class="column has-text-centered">
+          <div class="publication-links">
+            <span class="link-block">
+              <a href=""
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                </span>
+                <span>Paper</span>
+              </a>
+            </span>
+            <!-- PDF Link. -->
+            <span class="link-block">
+                <!-- <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>ArXiv</span>
+                  </a>
+                </span> -->
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <img src="static2/arxiv.png" alt="ArXiv" style="height: 1em; width: auto;">
+                  <span> ArXiv</span>
+                </a>
+                
+                <span class="link-block">
+                  <a href=""
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Coming soon</span>
+                </a>
+            </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <!-- <h2 class="title is-3">PlanGen</h2> -->
+        <!-- <p class="content has-text-justified">
+        </p> -->
+        <div class="content has-text-justified">
+          <img src="static2/fig1.png" />
+        </div>
+        <p class="content has-text-justified">
+          PlanGen models <b>layout planning</b> and <b>image generation</b> jointly, allowing layout planning before generating corresponding images, and the two processes are completed in a unified model. PlanGen can perform multi-type tasks related to layout, including a) layout-image joint generation, b) layout-to-image generation, c) image layout understanding and d) layout-guided image manipulation.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="hero2">
+  <div class="is-max-desktop">
+    <h2 class="title is-2, columns is-centered">Layout-Image Joint Generation Examples</h2>
+    <div class="marquee-wrapper">
+        <div class="marquee-block">
+          <div class="marquee-inner to-left">
+            <span>
+              <div class="marquee-item"><img class="image" src="static2/a1.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a2.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a3.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a4.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a5.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a6.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a7.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a8.png"></div>
+            </span>
+            <span>
+              <div class="marquee-item"><img class="image" src="static2/a1.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a2.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a3.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a4.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a5.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a6.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a7.png"></div>
+              <div class="marquee-item"><img class="image" src="static2/a8.png"></div>
+            </span>
+        </div>
+    </div>
+  </section> -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            In this paper, we propose a unified layout planning and image generation model, <b><i>PlanGen</i></b>, which can <b>pre-plan spatial layout conditions before generating images</b>. Unlike previous diffusion-based models that treat layout planning and layout-to-image as two separate models, PlanGen jointly models the two tasks into one autoregressive transformer using only next-token prediction. PlanGen integrates layout conditions into the model as context without requiring specialized encoding of local captions and bounding box coordinates, which provides significant advantages over the previous embed-and-pool operations on layout conditions, particularly when dealing with complex layouts. Unified prompting allows PlanGen to perform multitasking training related to layout, including <i>layout planning</i>, <i>layout-to-image generation</i>, <i>image layout understanding</i>, etc. In addition, PlanGen can be seamlessly expanded to <i>layout-guided image manipulation</i> thanks to the well-designed modeling, with teacher-forcing content manipulation policy and negative layout guidance. Extensive experiments verify the effectiveness of our PlanGen in multiple layout-related tasks, showing its great potential.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-six-fifths">
+        <h2 class="title is-2, columns is-centered">Overview</h2>
+      <br>
+      <h2 class="subtitle has-text-justified">
+        <figure style="width: 100%;">
+          <!-- <a href="assets/figures/overview.png"> -->
+          <img width="100%" src="static2/pipeline.png" />
+          <!-- </a> -->
+        </figure>
+      </h2>
+    </div>
+  </div>
+  <p class="content has-text-justified">
+    <b><i>Upper</i></b>: PlanGen models layout planning and image generation jointly in an autoregressive visual-language model through a unified prompting design with the next-token prediction training objective. <b><i>Lower</i></b>: Illustration of PlanGen’s multitasking related to layout: <b>a)</b> layout-image joint generation, <b>b)</b> layout to image generation, <b>c)</b> image layout understanding and <b>d)</b> layout-guided image manipulation.
+   </p>
+</div>
+</section>
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Layout-Image Joint Generation</h2>
+        <p class="content has-text-justified">
+        </p>
+        <div class="content has-text-justified">
+          <img src="static2/m_2stage.png" />
+        </div>
+        <p class="content has-text-justified">
+          PlanGen can complete <b>layout planning</b> and <b>layout-to-image generation</b> in a unified model. Just like thinking about what object each area should be before generating an image, such an explicit planning process allows the model to enjoy more powerful image generation capabilities.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Layout-to-Image Generation</h2>
+        <p class="content has-text-justified">
+        </p>
+        <div class="content has-text-justified">
+          <img src="static2/m_g2i.png" />
+        </div>
+        <p class="content has-text-justified">
+          PlanGen takes layout conditions as context input, with extremely strong flexibility and scalability, no need to compress the layout conditions as previous methods, allowing as detailed and complex local descriptions as possible, leading to a more aligned layout-to-image generation thanks to transformer’s long context dependencies.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Image Layout Understanding</h2>
+        <p class="content has-text-justified">
+        </p>
+        <div class="content has-text-justified">
+          <img src="static2/m_mmu.png" />
+        </div>
+        <p class="content has-text-justified">
+          The ability to understand the layout of real images can help the model generate images that are more in line with the layout conditions, intuitively, because this can further strengthen the model’s in-depth understanding of the relationship between layout conditions and corresponding images. Including the task of image layout understanding to PlanGen can move further towards a more general layout VLM.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero"></section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Layout-guided Image Manipulation</h2>
+        <div class="content has-text-justified">
+          <img src="static2/edit.png" />
+        </div>
+        <p class="content has-text-justified">
+          Benefiting from the modeling paradigm defined by layout conditions, PlanGen could control the generation of the contents of the local area based on the corresponding local captions and bounding boxes, which allows us to easily extend PlanGen to layout-guided image manipulation without further task-specific training.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="section" id="BibTeX">
+  <div class="container content is-max-desktop">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{he2024freeedit,
+      title={FreeEdit: Mask-free Reference-based Image Editing with Multi-modal Instruction}, 
+      author={Runze He and Kai Ma and Linjiang Huang and Shaofei Huang and Jialin Gao and Xiaoming Wei and Jiao Dai and Jizhong Han and Si Liu},
+      year={2024},
+      eprint={2409.18071},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2409.18071}, 
+}</code></pre>
+  </div>
+</section> -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div class="content">
+          <p>
+             The source code of this webpage is based on the <a href="https://github.com/nerfies/nerfies.github.io/"> Nerfies</a> project webpage.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="text/javascript" src="./static/slick/slick.min.js"></script>
+</body>
+</html>

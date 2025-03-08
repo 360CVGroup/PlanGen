@@ -1,0 +1,167 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.footer .icon-link {
+  font-size: 25px;
+  color: #000;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors a {
+  color: hsl(204, 86%, 53%);
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.results-carousel video {
+  height: 230px;
+  object-fit: cover;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+/* Custom styles for video containers */
+.video-container {
+  width: 100%;
+  height: auto;
+}
+
+.video-container video {
+  width: 100%;
+  height: auto;
+}
+
+/* Ensure carousel items are displayed correctly */
+.carousel .item {
+  margin: 10px;
+  flex: 0 0 auto;
+}
+
+.carousel .item video {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Grid layout for video comparisons */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.comparison-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comparison-video {
+  width: auto;
+  height: 100%;
+}
+
+
+
+.marquee-wrapper{
+  text-align:center;
+}
+.marquee-wrapper .container{
+  overflow:hidden;
+}
+.marquee-inner span{
+  float:left;
+  width:50%;
+}
+.marquee-wrapper .marquee-block{
+  --total-marquee-items:10;
+  height: 600px;
+  width: calc(588px * (var(--total-marquee-items)));
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  /* margin: 20px auto; */
+  /* background:#1B2531; */
+  padding: 20px 0;
+}
+.marquee-inner{
+  display: block;
+  width: 200%;
+  position: absolute;
+}
+.marquee-inner p{
+  padding-top: 5px;
+  font-weight: 800;
+  font-size: 24px;
+  font-family: Comic Mono;
+}
+
+.marquee-item p{
+  padding-top: 5px;
+  font-weight: 800;
+  font-size: 20px;
+  font-family: Comic Mono;
+  text-align: center;
+}
+.marquee-item p > c{
+  color: #eb002a;
+}
+
+.marquee-inner.to-left{
+  animation: marqueeLeft 80s linear infinite;
+}
+.marquee-inner.to-right{
+  animation: marqueeRight 80s linear infinite;
+}
+.marquee-item{
+  /* width: 800px; */
+  height: 300px;
+  display: inline-block;
+  margin: 0 10px;
+  float: left;
+  transition: all .3s ease-out;
+  background:#ececec;
+  border-bottom: orange 5px solid;
+  margin-top: 10px;
+}
+@keyframes marqueeLeft{
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
+@keyframes marqueeRight{
+  0% { 
+    left: -100%; 
+  }
+  100% {
+   left: 0; 
+  }
+}
