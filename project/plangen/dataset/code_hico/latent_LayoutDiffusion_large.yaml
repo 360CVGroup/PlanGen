@@ -1,0 +1,174 @@
+model:
+  type: layout_diffusion.layout_diffusion_unet.LayoutDiffusionUNetModel
+  parameters:
+    image_size: 32
+    use_fp16: True
+    use_scale_shift_norm: True
+    in_channels: 4
+    out_channels: 8
+    model_channels: 256
+    encoder_channels: 256 # assert same as layout_encoder.hidden_dim
+    num_head_channels: 32
+    num_heads: -1
+    num_heads_upsample: -1
+    num_res_blocks: 2
+    num_attention_blocks: 1
+    resblock_updown: True
+    attention_ds: [ 4, 2, 1 ]
+    channel_mult: [ 1, 2, 4 ]
+    dropout: 0.0
+    use_checkpoint: False
+    use_positional_embedding_for_attention: True
+    attention_block_type: 'ObjectAwareCrossAttention'
+
+
+    layout_encoder:
+      #type: layout_diffusion.layout_encoder.LayoutTransformerEncoder
+      type: layout_encoder.LayoutTransformerEncoder
+      parameters:
+        used_condition_types: [
+          'obj_class', 'obj_bbox', 'is_valid_obj'
+        ]
+        hidden_dim: 768  # 256
+        output_dim: 1536 # 1024 # model_channels x 4
+        num_layers: 6
+        num_heads: 8
+        use_final_ln: True
+        use_positional_embedding: False
+        resolution_to_attention: [ 8, 16, 32 ]
+        use_key_padding_mask: False
+
+
+
+diffusion:
+  type: layout_diffusion.respace.SpacedDiffusion
+  parameters:
+    model_var_type: "LEARNED_RANGE"
+    model_mean_type: "EPSILON"
+    diffusion_steps: 1000
+    noise_schedule: "linear"
+    learn_sigma: True
+    timestep_respacing: [ 1000 ]
+    loss: [ "RESCALED_MSE" ]
+
+schedule_sampler:
+  type: layout_diffusion.resample.UniformSampler
+
+data:
+  type: 'COCO-stuff'
+  parameters:
+    filter_mode: 'LostGAN'
+    use_deprecated_stuff2017: True
+    image_size: 512
+    layout_length: 10
+    num_classes_for_layout_object: 185
+    mask_size_for_layout_object: 32
+    loader_num_workers: 16
+    include_relationships: False
+    root_dir: '/home/jovyan/boomcheng-data/aigc/LayoutProj/LayoutDiffusion/datasets/coco'
+    instance_whitelist: null
+    stuff_whitelist: null
+    include_other: False
+    min_object_size: 0.02
+    min_objects_per_image: 3
+    max_objects_per_image: 8
+    stuff_only: True
+    used_condition_types: [ 'obj_class','obj_bbox' ]
+    return_origin_image: False
+    proportion_empty_prompts: 0.1
+    #grit_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/GRIT/grit-20m-512-obj3-demo.json'
+    #lora_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/diffusers/examples/controlnet/data_lora/yangmi-base-birme512-data.json'
+    #lora_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/diffusers/examples/controlnet/data_lora/yangmi-birme-data.json'
+    #lora_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/diffusers/examples/controlnet/data_lora/dog_data.json'
+    #lora_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/diffusers/examples/controlnet/data_lora/hintonV2_data.json'
+    #lora_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/diffusers/examples/controlnet/data_lora/shrek_data.json'
+    lora_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/diffusers/examples/controlnet/data_lora/auntcass_data.json'
+
+    #grit_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/GRIT/grit-20m-512-obj3-all-124w.json'
+    #grit_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/GRIT/grit-20m-512-obj3-demo.json'
+    grit_json: '/home/jovyan/boomcheng-data-shcdt/herunze/code/OmniGen/code_chengbo/grit-20m-512-obj3-demo.json'
+    coco_train_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/LayoutDiffusion/datasets/coco/annotations/full_layout_train2017_obj3-8_74777-414443.json'
+    coco_val_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/LayoutDiffusion/datasets/coco/annotations/full_layout_val2017_obj3-8_3097-17191.json'
+    vg_train_json: ''
+    vg_val_json: ''
+
+    train:
+      image_dir: 'images/train2017'
+      instances_json: 'annotations/instances_train2017.json'
+      stuff_json: 'annotations/stuff_train2017.json'
+      deprecated_stuff_ids_txt: 'annotations/deprecated-challenge2017/train-ids.txt'
+      max_num_samples: null
+      specific_image_ids: [ ]
+      shuffle: True
+      batch_size: 16           # 2 GPUs, total_batch_size=2x16=32;     need 22GB memory per GPU
+      left_right_flip: True
+      use_MinIoURandomCrop: True
+    val:
+      image_dir: 'images/val2017'
+      instances_json: 'annotations/instances_val2017.json'
+      stuff_json: 'annotations/stuff_val2017.json'
+      deprecated_stuff_ids_txt: 'annotations/deprecated-challenge2017/val-ids.txt'
+      max_num_samples: 1024
+      specific_image_ids: [ ]
+      shuffle: False
+      batch_size: 16
+      left_right_flip: False
+      use_MinIoURandomCrop: False
+
+    test:
+      image_dir: 'images/val2017'
+      instances_json: 'annotations/instances_val2017.json'
+      stuff_json: 'annotations/stuff_val2017.json'
+      deprecated_stuff_ids_txt: 'annotations/deprecated-challenge2017/val-ids.txt'
+      max_num_samples: null
+      specific_image_ids: [ ]
+      shuffle: False
+      batch_size: 32
+      left_right_flip: False
+      use_MinIoURandomCrop: False
+
+
+
+train:
+  vae_root_dir: './pretrained_models/sd-vae-ft-ema'
+  latent_diffusion: True
+  pretrained_model_path: ''
+  resume_checkpoint: ''
+  classifier_free: True
+  classifier_free_dropout: 0.2
+  lr: 1e-5
+  ema_rate: "0.9999"
+  micro_batch_size: -1
+  save_interval: 10000
+  log_interval: 10
+  log_dir: './log/latent_LayoutDiffusion_large'
+  use_fp16: True
+  fp16_scale_growth: 1e-3
+  weight_decay: 0.0
+  lr_anneal_steps: 0
+  find_unused_parameters: False
+  only_update_parameters_that_require_grad: False
+
+
+
+sample:
+  fix_seed: True
+  use_fp16: True
+  log_root: '/home/jovyan/boomcheng-data/aigc/LayoutProj/LayoutDiffusion/samples/COCO-stuff_256x256/LayoutDiffusion_large'
+  sample_suffix: 'model1150000'
+  pretrained_model_path: './pretrained_models/COCO-stuff_256x256_LayoutDiffusion_large_ema_1150000.pt'
+  classifier_free: True
+  classifier_free_scale: 1.0
+  sample_times: 1
+  timestep_respacing: [ 200 ]
+  sample_method: 'ddpm'
+  clip_denoised: True
+  save_cropped_images: False
+  save_images_with_bboxs: False
+  save_sequence_of_obj_imgs: False
+  adaptive_step_size: False
+  rtol: 0.05
+  fast_version: True
+  eps: 1e-4
+
+

@@ -1,0 +1,26 @@
+[
+    {
+        "image_path": "gen_data/image_example/0/image.png", 
+        "base_caption": "", 
+        "new_grounding_prompt": "<grounding><ref>A stone with a bird standing on it</ref><box><h28>,<w66>,<h43>,<w44></box></grounding>", 
+        "edited_grounding_prompt": "<grounding><ref>...</ref><box><h28>,<w66>,<h43>,<w44></box></grounding>", 
+        "neg_grounding_prompt": "", 
+        "type": ""
+    },
+    {
+        "image_path": "gen_data/image_example/0/image.png", 
+        "base_caption": "", 
+        "new_grounding_prompt": "<grounding><ref>A luxury cruise ship</ref><box><h28>,<w66>,<h43>,<w99></box></grounding>", 
+        "edited_grounding_prompt": "<grounding><ref>...</ref><box><h28>,<w66>,<h43>,<w99></box></grounding>", 
+        "neg_grounding_prompt": "", 
+        "type": ""
+    },
+    {
+        "image_path": "gen_data/image_example/0/image.png", 
+        "base_caption": "", 
+        "new_grounding_prompt": "<grounding><ref>A pirate ship</ref><box><h28>,<w66>,<h43>,<w99></box></grounding>", 
+        "edited_grounding_prompt": "<grounding><ref>...</ref><box><h28>,<w66>,<h43>,<w99></box></grounding>", 
+        "neg_grounding_prompt": "", 
+        "type": ""
+    }
+]
