@@ -1,0 +1,2 @@
+git clone https://github.com/deepseek-ai/Janus
+git clone https://github.com/weixi-feng/LayoutGPT
