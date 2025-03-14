@@ -29,6 +29,11 @@ Image demos can be found on the [HiCo](https://360cvgroup.github.io/HiCo_T2I/). 
 ```
 git clone https://github.com/360CVGroup/PlanGen.git
 cd PlanGen
+
+cd three_party
+git clone https://github.com/deepseek-ai/Janus
+cd ..
+
 conda create -n plangen python=3.10
 conda activate plangen
 pip install -r requirements.txt
@@ -86,18 +91,25 @@ python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py
 ```
 The default training data includes LayoutSAM, HiCo, OpenImage and LayoutGPT, which you can modify in the configuration file as needed.
 
-<!-- ## BibTeX
+If you need to use layoutGPT data in your training, do the following:
 ```
-@misc{cheng2024hicohierarchicalcontrollablediffusion,
-      title={HiCo: Hierarchical Controllable Diffusion Model for Layout-to-image Generation}, 
-      author={Bo Cheng and Yuhang Ma and Liebucha Wu and Shanyuan Liu and Ao Ma and Xiaoyu Wu and Dawei Leng and Yuhui Yin},
-      year={2024},
-      eprint={2410.14324},
+cd three_party
+git clone https://github.com/weixi-feng/LayoutGPT
+cd ..
+```
+
+## BibTeX
+```
+@misc@misc{he2025plangen,
+      title={PlanGen: Towards Unified Layout Planning and Image Generation in Auto-Regressive Vision Language Models}, 
+      author={Runze He and Bo Cheng and Yuhang Ma and Qingxiang Jia and Shanyuan Liu and Ao Ma and Xiaoyu Wu and Liebucha Wu and Dawei Leng and Yuhui Yin},
+      year={2025},
+      eprint={2503.10127},
       archivePrefix={arXiv},
       primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2410.14324}, 
+      url={https://arxiv.org/abs/2503.10127}, 
 }
-``` -->
+```
 ## License
 This project is licensed under the [Apache License (Version 2.0)](https://github.com/modelscope/modelscope/blob/master/LICENSE).
 
