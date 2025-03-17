@@ -59,7 +59,8 @@ class Dataset_oim(Dataset):
         df_bbox = pd.read_csv(bboxs_path)
         bbox_groups = df_bbox.groupby(df_bbox.LabelName)
 
-        anno_files = pd.read_csv('project/janus/dataset/oim/class-descriptions-boxable.csv')
+        #anno_files = pd.read_csv('project/janus/dataset/oim/class-descriptions-boxable.csv')
+        anno_files = pd.read_csv('project/plangen/dataset/oim/class-descriptions-boxable.csv')
         self.anno_dict = anno_files.set_index(anno_files.columns[0])[anno_files.columns[1]].to_dict()
 
         self.image_ids = df_bbox['ImageID'].unique()
