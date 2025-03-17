@@ -30,10 +30,6 @@ Image demos can be found on the [HiCo](https://360cvgroup.github.io/HiCo_T2I/). 
 git clone https://github.com/360CVGroup/PlanGen.git
 cd PlanGen
 
-cd three_party
-git clone https://github.com/deepseek-ai/Janus
-cd ..
-
 conda create -n plangen python=3.10
 conda activate plangen
 pip install -r requirements.txt
