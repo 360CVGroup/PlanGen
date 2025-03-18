@@ -3,7 +3,7 @@ _base_ = '../base.py'
 train_data=[
     dict(task_type='uni', data_name=['hico'], batch_size=1),
     dict(task_type='mmu', data_name=['hico'], batch_size=1),
-    dict(task_type='plan', data_name='layout', batch_size=1),
+    # dict(task_type='plan', data_name='layout', batch_size=1),
 ]
 test_data=dict(task_type='uni', data_name='hico', batch_size=8)
 
