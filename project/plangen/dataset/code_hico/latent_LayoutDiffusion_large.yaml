@@ -86,7 +86,8 @@ data:
 
     #grit_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/GRIT/grit-20m-512-obj3-all-124w.json'
     #grit_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/GRIT/grit-20m-512-obj3-demo.json'
-    grit_json: '/home/jovyan/boomcheng-data-shcdt/herunze/code/OmniGen/code_chengbo/grit-20m-512-obj3-demo.json'
+    # grit_json: '/home/jovyan/boomcheng-data-shcdt/herunze/code/OmniGen/code_chengbo/grit-20m-512-obj3-demo.json'
+    grit_json: '/home/jovyan/boomcheng-data-shcdt/herunze/code/base/PlanGen/gen_data/grit-20m-512-obj3-demo.json'
     coco_train_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/LayoutDiffusion/datasets/coco/annotations/full_layout_train2017_obj3-8_74777-414443.json'
     coco_val_json: '/home/jovyan/boomcheng-data/aigc/LayoutProj/LayoutDiffusion/datasets/coco/annotations/full_layout_val2017_obj3-8_3097-17191.json'
     vg_train_json: ''

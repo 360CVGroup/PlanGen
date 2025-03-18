@@ -129,8 +129,7 @@ class Hico_dataset(torch.utils.data.Dataset):
     ):
         args = self.args
         if tiny_hico_data:
-            #cfg_data = OmegaConf.load("/home/jovyan/boomcheng-data-shcdt/herunze/code/base/PlanGen/project/plangen/dataset/code_hico/latent_LayoutDiffusion_large.yaml")
-            cfg_data = OmegaConf.load("/home/jovyan/boomcheng-data-shcdt/herunze/code/PlanGen/project/plangen/dataset/code_hico/latent_LayoutDiffusion_large.yaml")
+            cfg_data = OmegaConf.load("/home/jovyan/boomcheng-data-shcdt/herunze/code/base/PlanGen/project/plangen/dataset/code_hico/latent_LayoutDiffusion_large.yaml")
         else:
             cfg_data = OmegaConf.load("/home/jovyan/boomcheng-data/aigc/LayoutProj/diffusers_0263/examples/controlnet/latent_LayoutDiffusion_large.yaml")
         pretrained_model = self.args.sdxl_path

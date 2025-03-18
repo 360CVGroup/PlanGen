@@ -1065,7 +1065,6 @@ class System(Base_System):
             mmu=self.forward_mmu,
             uni=self.forward_uni,
             plan=self.forward_plan,
-            edit=self.forward_edit,
         )
 
         for flow_id in batch:

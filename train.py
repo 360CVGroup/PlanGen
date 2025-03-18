@@ -177,8 +177,6 @@ def main():
 
                 accelerator.backward(loss)
 
-                accelerator.unwrap_model(model).post_grad()
-
                 # names = []
                 # for name, param in model.named_parameters():
                 #     if param.grad is None:
