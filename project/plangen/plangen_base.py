@@ -1,76 +1,25 @@
 import sys;sys.path.insert(0, './three_party/Janus')
-import torch
-from torch import nn
-import argparse
-import logging
-import math
-import os
-import shutil
-from copy import deepcopy
-import types
 import gc
-from time import time
-import einops
 from rich import print
 import os.path as osp
-import datasets
-import numpy as np
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import torch.utils.checkpoint
-import transformers
-from functools import partial
-from accelerate import Accelerator
-from accelerate.logging import get_logger
-from accelerate.utils import ProjectConfiguration, set_seed
 from tqdm.auto import tqdm
-from transformers import CLIPTextModel, CLIPTokenizer
-import diffusers
-from diffusers import AutoencoderKL, DDPMScheduler, DDIMScheduler, DPMSolverMultistepScheduler, UNet2DConditionModel, UniPCMultistepScheduler, EulerAncestralDiscreteScheduler, DiffusionPipeline
-from diffusers.optimization import get_scheduler
-from diffusers.training_utils import EMAModel
-from diffusers.utils.torch_utils import randn_tensor
-from diffusers.models.attention import BasicTransformerBlock, _chunked_feed_forward
-from diffusers.models.attention_processor import Attention
-from PIL import Image
-from mmengine.config import Config, DictAction
-from diffusers import ControlNetModel
-import safetensors
 from janus.models import MultiModalityCausalLM, VLChatProcessor
 from janus.utils.io import load_pil_images
 from src.utils.funcs import *
-import pickle
-from contextlib import contextmanager
-import wandb
 from peft import LoraConfig, set_peft_model_state_dict, PeftModel, get_peft_model, TaskType
-from time import time
 from torch.utils.data.dataloader import default_collate
 from torchvision.transforms import ToPILImage, ToTensor
 to_pil = ToPILImage()
 to_ts = ToTensor()
-import os
-import PIL.Image
 import torch
-import numpy as np
 from transformers import AutoModelForCausalLM
 from src.utils.causal_loss import ForCausalLMLoss
 from tokenizers import AddedToken
-from .dataset.set_dataset import set_dataset
 import traceback
-
-from transformers import AutoModel, AutoTokenizer
-import fire
-
-import json
-import os
-
 from tqdm import tqdm, trange
-from einops import rearrange
-from torchvision.utils import make_grid
 from torchvision.transforms import ToTensor
-from pytorch_lightning import seed_everything
-from diffusers import DiffusionPipeline, StableDiffusionPipeline
 from project.base.base_system import Base_System
 from lightning.pytorch.utilities import CombinedLoader
 from .dataset.set_dataset import get_dataset
@@ -349,8 +298,8 @@ class System(Base_System):
 
         print('\n uni...')
 
-        base_caption = batch['base_caption']
         gt_image = batch['image']
+        base_caption = batch['base_caption']
         gt_grounding = batch['gt_grounding']
 
         bs = len(base_caption)
@@ -422,6 +371,10 @@ class System(Base_System):
             # if edit_mask is not None:
             #     gt_image[:,0][edit_mask[:,0]==1] = 150
 
+            if gt_image is None:
+                gt_image = pr_image
+            if gt_grounding is None:
+                gt_grounding = pr_grounding
             vis = torch.cat([gt_image, pr_image], dim=0)
             x_grounding = [t for t in gt_grounding]
             for i in range(parallel_size):
@@ -703,6 +656,7 @@ class System(Base_System):
             # print('debugging...')
             max_length = self.args.debug_max_seq_len
         if max_length is None:
+            # import pdb;pdb.set_trace()
             max_length = max(map(len, all_inputs_ids))
 
         padded_all_inputs_ids = torch.ones((bs, max_length))*self.vl_chat_processor.pad_id
@@ -734,9 +688,9 @@ class System(Base_System):
             except Exception as e:
                 print(e)
                 print(batch[0].keys())
-                print(batch[1].keys())
+                # print(batch[1].keys())
                 traceback.print_exc()
-                import pdb;pdb.set_trace()
+                # import pdb;pdb.set_trace()
         return batch
     
     def mmu_collate(self, batch, pass_default=False):
@@ -755,6 +709,7 @@ class System(Base_System):
         if self.args.func == 'minicpm_cap':
             return batch
 
+        # import pdb;pdb.set_trace()
         bs = len(batch['prompt'])
 
         ##### t2i
@@ -774,6 +729,7 @@ class System(Base_System):
         for base_caption, grounding_prompt in zip(batch['base_caption'], batch['gt_grounding']):
             _, inputs_ids = self.wrap_uni_prompt(base_caption, grounding_prompt)
             all_inputs_ids.append(inputs_ids)
+        # import pdb;pdb.set_trace()
         uni_inputs_ids, uni_attention_mask = self.pad_input_ids(all_inputs_ids)
         uni_attention_mask_image = torch.cat([uni_attention_mask, torch.ones((bs, self.image_token_num_per_image))], dim=-1)
         batch.update(dict(

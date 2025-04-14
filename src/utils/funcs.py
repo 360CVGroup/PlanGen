@@ -707,7 +707,11 @@ def bbox_visualization(image_pil: Image,
     
     # Load a font with the specified size
     # font = ImageFont.truetype("utils/arial.ttf", font_size)
-    font = ImageFont.truetype("/home/jovyan/boomcheng-data/tools/font/msyh.ttf", font_size)
+    # font = ImageFont.truetype("/home/jovyan/boomcheng-data/tools/font/msyh.ttf", font_size)
+    try:
+        font = ImageFont.truetype("/home/jovyan/boomcheng-data/tools/font/msyh.ttf", 20)
+    except IOError:
+        font = ImageFont.load_default()
     
     # Create a PIL ImageDraw object to draw on the input image
     if isinstance(image_pil, np.ndarray):

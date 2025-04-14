@@ -37,38 +37,34 @@ pip install -r requirements.txt
 ### 2. Prepare the models
 ```
 git lfs install
-
-# PlanGen checkpoint
-git clone https://huggingface.co/qihoo360/PlanGen models/PlanGen
+git clone https://huggingface.co/deepseek-ai/Janus-Pro-1B
+git clone https://huggingface.co/qihoo360/PlanGen
 ```
-### 3. Prepare the training data
+And then, change the `janus_path` in file `project/plangen/cfg/base.py` to the dirname where it was downloaded.
 
-Please refer to [CreatiLayout](https://github.com/HuiZhang0812/CreatiLayout?tab=readme-ov-file#dataset) to download the LayoutSAM dataset.
+### 3. Multi-task Inference on LayoutSAM-eval dataset
+Download LayoutSAM-eval benchmark:
+```
+git clone https://huggingface.co/datasets/HuiZhang0812/LayoutSAM-eval
+```
+And then, change the `layoutsam_eval` in file `project/plangen/cfg/base.py` to the dirname where it was downloaded.
 
-Please refer to [HiCo](https://github.com/360CVGroup/HiCo_T2I) to prepare the HiCo dataset.
-
-Please refer to [OpenImage v6](https://storage.googleapis.com/openimages/web/download.html) to download the OpenImage dataset, and use [MiniCPM](https://huggingface.co/openbmb/MiniCPM-V-2_6) to caption the images. We store the OpenImage image captions we annotate in [PlanGen_oim_caps](https://huggingface.co/datasets/qihoo360/PlanGen_data/blob/main/oim_caps.tgz).
-
-
-### 4. Multi-task Inference on LayoutSAM-eval dataset
-
-Change the `layoutsam_eval` in file `project/plangen/cfg/base.py` to the dirname where it was downloaded, or if your machine is connected to the Internet, it will download automatically.
 ```
 # layout2image generation
-python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py --opt test=True resume=models/PlanGen/checkpoint-200000 test_data.data_name='creati' test_data.task_type='uni'
+python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py --opt test=True resume=/path/to/PlanGen/checkpoint-200000 test_data.data_name='creati' test_data.task_type='uni'
 
 # layout-image joint generation
-python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py --opt test=True resume=models/PlanGen/checkpoint-200000 test_data.data_name='creati' test_data.task_type='uni_2stage'
+python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py --opt test=True resume=/path/to/PlanGen/checkpoint-200000 test_data.data_name='creati' test_data.task_type='uni_2stage'
 
 # image layout understanding
-python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py --opt test=True resume=models/PlanGen/checkpoint-200000 test_data.data_name='creati' test_data.task_type='mmu'
+python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py --opt test=True resume=/path/to/PlanGen/checkpoint-200000 test_data.data_name='creati' test_data.task_type='mmu'
 ```
 
-### 5. Object Removal and Image Editing on custom coco subset
+### 4. Object Removal and Image Editing on custom coco subset
 
 In order to perform object removal and image editing, you need to download our proprocessed 200 samples based on COCO from [PlanGen_coco_data](https://huggingface.co/datasets/qihoo360/PlanGen_data/blob/main/coco_data.zip).
 ```
-wget https://huggingface.co/datasets/qihoo360/PlanGen_data/blob/main/coco_data.zip
+wget https://huggingface.co/datasets/qihoo360/PlanGen_data/resolve/main/coco_data.zip
 unzip coco_data.zip
 ```
 Change the `coco_200_path` in file `project/plangen/cfg/base.py` to `./coco_data`.
@@ -82,17 +78,28 @@ python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py --opt test=Tr
 
 ## 🔥 Train
 
-```
-python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py
-```
-The default training data includes LayoutSAM, HiCo, OpenImage and LayoutGPT, which you can modify in the configuration file as needed.
+### 1. Prepare the training data
 
-If you need to use layoutGPT data in your training, do the following:
+Please refer to [CreatiLayout](https://github.com/HuiZhang0812/CreatiLayout?tab=readme-ov-file#dataset) to download the LayoutSAM dataset.
+
+Please refer to [HiCo](https://github.com/360CVGroup/HiCo_T2I) to prepare the HiCo dataset.
+
+Please refer to [OpenImage v6](https://storage.googleapis.com/openimages/web/download.html) to download the OpenImage dataset, and use [MiniCPM](https://huggingface.co/openbmb/MiniCPM-V-2_6) to caption the images. We store the OpenImage image captions we annotate in [PlanGen_oim_caps](https://huggingface.co/datasets/qihoo360/PlanGen_data/blob/main/oim_caps.tgz).
+
+If you also need to use layoutGPT data in your training, do the following:
 ```
 cd three_party
 git clone https://github.com/weixi-feng/LayoutGPT
 cd ..
 ```
+
+### 2. Start Training
+
+```
+python train.py --cfg project/plangen/cfg/uni/h_text_ump+oimsam.py
+```
+The default training data includes LayoutSAM, HiCo, OpenImage and LayoutGPT, which you can modify in the configuration file as needed.
+
 
 ## BibTeX
 ```

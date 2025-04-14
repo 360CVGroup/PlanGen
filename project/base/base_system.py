@@ -1,60 +1,15 @@
-import sys
 import torch
 from torch import nn
-import argparse
-import logging
-import math
 import os
 import shutil
-from copy import deepcopy
-import types
-import gc
-from time import time
-
-import einops
 from rich import print
 import os.path as osp
-import datasets
-import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.utils.checkpoint
-import transformers
-from accelerate import Accelerator
-from accelerate.logging import get_logger
-from accelerate.utils import ProjectConfiguration, set_seed
-from tqdm.auto import tqdm
-from transformers import CLIPTextModel, CLIPTokenizer
-import diffusers
-from diffusers import AutoencoderKL, DDPMScheduler, DDIMScheduler, DPMSolverMultistepScheduler, UNet2DConditionModel, UniPCMultistepScheduler, EulerAncestralDiscreteScheduler, DiffusionPipeline
-from diffusers.optimization import get_scheduler
-from diffusers.training_utils import EMAModel
-from diffusers.utils.torch_utils import randn_tensor
-from diffusers.models.attention import BasicTransformerBlock, _chunked_feed_forward
-from diffusers.models.attention_processor import Attention
-from PIL import Image
-from mmengine.config import Config, DictAction
-from diffusers import ControlNetModel
-import safetensors
 from src.utils.funcs import *
-from src.utils.seg_palette import palette#151个
-import pickle
-from src.utils.funcs import *
-from contextlib import contextmanager
-import wandb
-from peft import LoraConfig, set_peft_model_state_dict, PeftModel, get_peft_model
-from time import time
-from torch.utils.data.dataloader import default_collate
-
 import os
-import PIL.Image
 import torch
-import numpy as np
-from transformers import AutoModelForCausalLM
-from src.utils.causal_loss import ForCausalLMLoss
-from tokenizers import AddedToken
-
 from abc import ABC, abstractmethod
 
 class Base_System(nn.Module):
@@ -124,10 +79,10 @@ class Base_System(nn.Module):
     def forward(self, batch):
         pass
 
-    def resume(self, accelerator=None, stage1_path=None):
+    def resume(self, accelerator=None, resume_path=None):
         args = self.args
         global_step = 0
-        if stage1_path is None:
+        if resume_path is None:
             if args.resume != "latest":
                 if isinstance(args.resume, int):
                     path = f"checkpoint-{args.resume}"
@@ -157,9 +112,11 @@ class Base_System(nn.Module):
                 # if accelerator is not None:
                 #     accelerator.load_state(path, map_location='cpu', strict=False)#key缺少增多问题不大，但是shape要一致
         else:
-            state_dict = torch.load(osp.join(stage1_path, 'trainable_model_parameters.pth'), map_location=torch.device('cpu'))
+            state_dict = torch.load(osp.join(resume_path, 'trainable_model_parameters.pth'), map_location=torch.device('cpu'))
             mesg = self.load_state_dict(state_dict, strict=False)
-            print(mesg)
+            if len(mesg.unexpected_keys) > 0:
+                print(mesg.unexpected_keys)
+                assert False
 
         return global_step
     

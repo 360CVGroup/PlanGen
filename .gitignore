@@ -7,3 +7,4 @@ __pycache__/
 three_party/LayoutGPT/
 gen_data
 *.swp
+demo_joint_gen.py
