@@ -103,7 +103,7 @@ The default training data includes LayoutSAM, HiCo, OpenImage and LayoutGPT, whi
 
 ## BibTeX
 ```
-@misc@misc{he2025plangen,
+@misc{he2025plangen,
       title={PlanGen: Towards Unified Layout Planning and Image Generation in Auto-Regressive Vision Language Models}, 
       author={Runze He and Bo Cheng and Yuhang Ma and Qingxiang Jia and Shanyuan Liu and Ao Ma and Xiaoyu Wu and Liebucha Wu and Dawei Leng and Yuhui Yin},
       year={2025},
